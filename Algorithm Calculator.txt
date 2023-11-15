@@ -1,0 +1,35 @@
+Algorithm: Simple Calculator Program
+
+1. Start the calculator program.
+2. Enter an infinite loop.
+   a. Print the Simple Calculator Menu:
+      1. Addition
+      2. Subtraction
+      3. Multiplication
+      4. Division
+      5. Exit
+   b. Prompt the user to enter a choice (1-5).
+   c. If the choice is '5':
+      - Print "Exiting the calculator. Goodbye!"
+      - Exit the loop.
+   d. Try the following:
+      i.   Prompt the user to enter the 1st number.
+      ii.  Prompt the user to enter the 2nd number.
+      iii. If the choice is '1':
+             - Call the add function with num1 and num2.
+      iv.  If the choice is '2':
+             - Call the subtract function with num1 and num2.
+      v.   If the choice is '3':
+             - Call the multiply function with num1 and num2.
+      vi.  If the choice is '4':
+             - Call the divide function with num1 and num2.
+      vii. Print the result.
+   e. Handle the following exceptions:
+      i.   If a ValueError occurs:
+             - Print "Error: Please enter valid numeric values. Details:" followed by the exception details.
+      ii.  If a ZeroDivisionError occurs:
+             - Print "Error: Cannot divide by zero."
+      iii. If any other exception occurs:
+             - Print "An unexpected error occurred:" followed by the exception details.
+3. End the calculator program.
+
