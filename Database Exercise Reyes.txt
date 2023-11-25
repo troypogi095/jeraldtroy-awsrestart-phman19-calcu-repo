@@ -1,0 +1,108 @@
+Schema SQL
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    DateOfBirth DATE,
+    GradeLevel INT
+);
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(255),
+    Credits INT,
+    Instructor VARCHAR(255),
+    CourseDescription TEXT
+);
+
+CREATE TABLE Enrollments (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+CREATE TABLE Departments (
+  	DepartmentID INT PRIMARY KEY,
+	DepartmentName VARCHAR(255)
+);
+
+CREATE TABLE Teachers (
+  	TeachersID INT PRIMARY KEY,
+  	TeacherName VARCHAR(255),
+   	SubjectTaught VARCHAR(255),
+	DepartmentID INT,
+  FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+
+QUERY SQL
+
+INSERT INTO Students (StudentID, Name, DateOfBirth, GradeLevel)
+VALUES
+	(1, 'Juan', '2013-05-12', 88),
+    (2, 'Mark', '202-02-17', 89),
+	(3,'Pedro', '2012-08-24', 90),
+    (4,'Jerald', '2012-09-9', 93),
+    (5, 'Darl', '2013-03-2', 92);
+
+
+
+INSERT INTO Courses (CourseID, CourseName, Credits, Instructor, CourseDescription)
+VALUES
+    (1, 'Introduction to Programming', 3, 'Fire', 'Java'),
+    (2, 'Database Management', 2, 'Ice', 'SQL'),
+    (3, 'Web Development', 4, 'Water', 'HTML');
+    
+
+INSERT INTO Enrollments (EnrollmentID, StudentID, CourseID)
+VALUES
+	(1, 1, 1),
+    (2, 2, 1),
+    (3, 3, 3),
+    (4, 4, 1),
+    (5,5, 2);
+    
+INSERT INTO Departments (DepartmentID, DepartmentName)
+VALUES
+	(1, 'JavaDept'),
+    (2, 'SQLDept'),
+    (3, 'HTMLDept');
+
+
+INSERT INTO Teachers (TeachersID, TeacherName, SubjectTaught, DepartmentID)
+VALUES
+	(1, 'Fire', 'Introduction to Programming', 1),
+    (2, 'Ice', 'Database Management', 2),
+    (3, 'Water', 'Web Development', 3);
+
+
+SELECT Students.*, Courses.CourseID, Courses.CourseName
+FROM Students
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+WHERE Enrollments.CourseID = 1;
+
+SELECT Students.*, Courses.CourseID, Courses.CourseName
+FROM Students
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+WHERE Enrollments.CourseID = 2;
+
+SELECT Students.*, Courses.CourseID, Courses.CourseName
+FROM Students
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+WHERE Enrollments.CourseID = 3;
+
+SELECT Students.StudentID, Students.Name, SUM(Courses.Credits) AS TotalCredits
+FROM Students
+JOIN Enrollments ON Students.StudentID = Enrollments.StudentID
+JOIN Courses ON Enrollments.CourseID = Courses.CourseID
+GROUP BY Students.StudentID, Students.Name;
+
+SELECT Courses.CourseID, Courses.CourseName, COUNT(Enrollments.StudentID) AS EnrolledStudents
+FROM Courses
+LEFT JOIN Enrollments ON Courses.CourseID = Enrollments.CourseID
+GROUP BY Courses.CourseID, Courses.CourseName;
